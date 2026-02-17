@@ -1,0 +1,44 @@
+schema: spec-driven
+
+# Project context: shown to AI assistants when creating artifacts
+context: |
+  Project: WebJson
+  Purpose: 提供一个轻量的 HTTP 服务用于美化 JSON 字符串（缩进 4 个空格），并提供一个前端页面支持
+    文本输入和本地文件读取，结果可以展示并下载。
+  Tech stack:
+    - C++17
+    - cpp-httplib (single-header: httplib.h)
+    - nlohmann/json (json.hpp)
+    - Frontend: HTML + vanilla JavaScript
+  Entrypoint: ./build/webjson (默认监听 0.0.0.0:8080)
+  Static files directory: public/
+  API:
+    - POST /format: 接收原始 JSON 文本，成功返回格式化后的 JSON（4 空格缩进），失败返回 400 并包含 {"error": "..."}
+  Build (dev):
+    - mkdir -p build && cd build
+    - cmake ..
+    - cmake --build . --config Release
+  Run:
+    - ./build/webjson
+  Limits and behaviour:
+    - max_request_body: 5MB (超出返回 413)
+    - error responses: JSON with `error` field for parse errors
+  Security & deployment notes:
+    - 建议在生产环境使用 nginx 作为反向代理并终端 TLS、gzip、限速和日志轮转
+    - 服务不执行输入内容，仍建议对外暴露前添加速率限制和认证（如需）
+  File layout (important):
+    - CMakeLists.txt
+    - src/main.cpp
+    - public/index.html, public/app.js, public/style.css
+    - docs/PROJECT_SPEC.md
+
+# Per-artifact rules (optional):
+rules:
+  proposal:
+    - Keep proposals concise (<= 500 words)
+    - Include a "Non-goals" section when scope-limiting
+  tasks:
+    - Break tasks into chunks of at most 2 hours
+  docs:
+    - Include build and run instructions
+    - Document API endpoint and error codes
