@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>JSON Formatter</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <main>
+    <header>
+      <h1>JSON 美化器</h1>
+      <div class="header-controls">
+        <label class="file-label">文件: <input id="fileInput" type="file" accept="application/json,text/*"></label>
+        <div id="fileInfo" class="file-info" aria-live="polite"></div>
+        <div id="workerStatus" class="file-info" aria-live="polite"></div>
+        <label for="saveName">保存为:</label>
+        <input id="saveName" type="text" placeholder="formatted.json" aria-label="保存为文件名">
+        <label class="theme-label">主题
+          <select id="themeSelect" aria-label="主题切换">
+            <option value="light">浅色</option>
+            <option value="dark">深色</option>
+          </select>
+        </label>
+      </div>
+    </header>
+
+    <section class="editor">
+      <textarea id="input" placeholder="将 JSON 粘贴到此处，或选择文件读取" rows="12" aria-label="JSON 输入"></textarea>
+      <div class="controls-row">
+        <div class="left-controls">
+          <button id="formatBtn">格式化（服务器，4 空格）</button>
+          <button id="minifyBtn">压缩（本地）</button>
+          <label for="viewSelect">视图:</label>
+          <select id="viewSelect" aria-label="视图选择">
+            <option value="pretty">美化</option>
+            <option value="raw">原始</option>
+            <option value="minified">压缩</option>
+          </select>
+        </div>
+        <div class="right-controls">
+          <input id="downloadName" type="text" placeholder="formatted.json" aria-label="下载文件名" />
+          <button id="downloadBtn">下载结果</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="result">
+      <h2>结果</h2>
+      <pre id="output" tabindex="0" aria-live="polite"></pre>
+      <div id="error" class="error" role="alert" aria-atomic="true"></div>
+    </section>
+  </main>
+
+  <script src="/app.js"></script>
+</body>
+</html>
